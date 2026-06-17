@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Real Choice — Premium Groceries & Accessories</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+/* ===== RESET & BASE ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:hsl(var(--bg));color:hsl(var(--fg));transition:background .3s,color .3s;min-height:100vh}
+img{max-width:100%;display:block;border-radius:inherit}
+button{cursor:pointer;font-family:inherit;border:none;outline:none}
+input,select{font-family:inherit;outline:none}
+a{text-decoration:none;color:inherit}
+
+/* ===== CSS VARIABLES ===== */
+[data-theme="light"]{
+  --bg:45 29% 97%;--fg:160 30% 10%;--card:0 0% 100%;--border:150 20% 88%;
+  --primary:150 60% 28%;--primary-fg:0 0% 100%;
+  --secondary:40 90% 55%;--secondary-fg:0 0% 10%;
+  --muted:150 15% 94%;--muted-fg:150 15% 45%;
+  --accent:150 40% 92%;--accent-fg:150 60% 20%;
+  --danger:0 72% 51%;--success:142 72% 29%;
+  --shadow:150 30% 60%;
+}
+[data-theme="dark"]{
+  --bg:160 15% 8%;--fg:150 20% 92%;--card:160 12% 12%;--border:160 10% 20%;
+  --primary:150 50% 40%;--primary-fg:0 0% 100%;
+  --secondary:40 80% 50%;--secondary-fg:0 0% 10%;
+  --muted:160 10% 18%;--muted-fg:150 10% 55%;
+  --accent:160 20% 18%;--accent-fg:150 40% 70%;
+  --danger:0 65% 55%;--success:142 60% 40%;
+  --shadow:0 0% 0%;
+}
+
+/* ===== UTILITIES ===== */
+.hidden{display:none!important}
+.flex{display:flex}.grid{display:grid}.block{display:block}
+.items-center{align-items:center}.justify-between{justify-content:space-between}
+.justify-center{justify-content:center}.flex-col{flex-direction:column}
+.gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}
+.p-2{padding:.5rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}
+.px-4{padding-left:1rem;padding-right:1rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}
+.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}
+.px-6{padding-left:1.5rem;padding-right:1.5rem}
+.mt-2{margin-top:.5rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}
+.mb-2{margin-bottom:.5rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}
+.ml-auto{margin-left:auto}.mr-2{margin-right:.5rem}
+.text-sm{font-size:.875rem}.text-xs{font-size:.75rem}.text-lg{font-size:1.125rem}
+.text-xl{font-size:1.25rem}.text-2xl{font-size:1.5rem}.text-3xl{font-size:1.875rem}
+.font-medium{font-weight:500}.font-semibold{font-weight:600}.font-bold{font-weight:700}
+.font-extrabold{font-weight:800}
+.rounded{border-radius:.375rem}.rounded-lg{border-radius:.75rem}.rounded-xl{border-radius:1rem}
+.rounded-2xl{border-radius:1.25rem}.rounded-full{border-radius:9999px}
+.w-full{width:100%}.h-full{height:100%}
+.text-center{text-align:center}
+.overflow-hidden{overflow:hidden}.overflow-auto{overflow:auto}
+.relative{position:relative}.absolute{position:absolute}.fixed{position:fixed}
+.inset-0{top:0;left:0;right:0;bottom:0}
+.z-10{z-index:10}.z-20{z-index:20}.z-50{z-index:50}
+.border{border:1px solid hsl(var(--border))}
+.shadow{box-shadow:0 2px 8px hsla(var(--shadow)/.12)}
+.shadow-lg{box-shadow:0 8px 32px hsla(var(--shadow)/.16)}
+.opacity-0{opacity:0}.opacity-100{opacity:1}
+.pointer-events-none{pointer-events:none}
+.transition{transition:all .2s ease}
+.line-clamp-1{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* ===== COLORS ===== */
+.text-primary{color:hsl(var(--primary))}.bg-primary{background:hsl(var(--primary))!important}
+.text-secondary{color:hsl(var(--secondary))}.bg-secondary{background:hsl(var(--secondary))!important}
+.text-muted{color:hsl(var(--muted-fg))}.bg-muted{background:hsl(var(--muted))!important}
+.text-danger{color:hsl(var(--danger))}.bg-danger{background:hsl(var(--danger))!important}
+.text-success{color:hsl(var(--success))}.bg-success{background:hsl(var(--success))!important}
+.bg-card{background:hsl(var(--card))!important}
+.bg-accent{background:hsl(var(--accent))!important}
+.text-accent{color:hsl(var(--accent-fg))}
+.border-primary{border-color:hsl(var(--primary))!important}
+
+/* ===== PAGES ===== */
+.page{display:none;min-height:100vh;animation:fadeIn .35s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== BUTTONS ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.625rem 1.5rem;border-radius:.75rem;font-weight:600;font-size:.95rem;transition:all .2s ease;cursor:pointer;border:none}
+.btn-primary{background:hsl(var(--primary));color:hsl(var(--primary-fg))}.btn-primary:hover{opacity:.88;transform:translateY(-1px)}
+.btn-secondary{background:hsl(var(--secondary));color:hsl(var(--secondary-fg))}.btn-secondary:hover{opacity:.88}
+.btn-outline{background:transparent;border:2px solid hsl(var(--primary));color:hsl(var(--primary))}.btn-outline:hover{background:hsl(var(--accent))}
+.btn-ghost{background:transparent;color:hsl(var(--fg))}.btn-ghost:hover{background:hsl(var(--muted))}
+.btn-danger{background:hsl(var(--danger));color:#fff}.btn-danger:hover{opacity:.88}
+.btn-sm{padding:.375rem 1rem;font-size:.825rem}
+.btn-lg{padding:.875rem 2rem;font-size:1.05rem;border-radius:1rem}
+.btn-full{width:100%}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* ===== INPUTS ===== */
+.input{width:100%;padding:.75rem 1rem;border:2px solid hsl(var(--border));border-radius:.75rem;background:hsl(var(--card));color:hsl(var(--fg));font-size:.95rem;transition:border-color .2s}
+.input:focus{border-color:hsl(var(--primary))}
+.input-group{display:flex;flex-direction:column;gap:.35rem}
+.input-group label{font-size:.875rem;font-weight:500;color:hsl(var(--muted-fg))}
+
+/* ===== CARD ===== */
+.card{background:hsl(var(--card));border-radius:1rem;border:1px solid hsl(var(--border));overflow:hidden}
+.card-hover{transition:transform .2s,box-shadow .2s}.card-hover:hover{transform:translateY(-3px);box-shadow:0 12px 28px hsla(var(--shadow)/.15)}
+
+/* ===== TOP NAV ===== */
+#topnav{position:sticky;top:0;z-index:50;background:hsl(var(--card));border-bottom:1px solid hsl(var(--border));padding:.75rem 1rem}
+.topnav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:1rem}
+.logo{display:flex;align-items:center;gap:.5rem;text-decoration:none}
+.logo-mark{width:36px;height:36px;background:hsl(var(--primary));border-radius:.625rem;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1rem;flex-shrink:0}
+.logo-name{font-weight:800;font-size:1.15rem;color:hsl(var(--primary))}
+.nav-search{flex:1;max-width:420px;position:relative}
+.nav-search input{padding:.55rem 1rem .55rem 2.75rem;border-radius:2rem;background:hsl(var(--muted));border:1.5px solid transparent;color:hsl(var(--fg));font-size:.875rem;width:100%;transition:all .2s}
+.nav-search input:focus{background:hsl(var(--card));border-color:hsl(var(--primary))}
+.nav-search-icon{position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:hsl(var(--muted-fg));pointer-events:none}
+.nav-actions{display:flex;align-items:center;gap:.5rem;margin-left:auto}
+.nav-icon-btn{position:relative;width:40px;height:40px;border-radius:.625rem;display:flex;align-items:center;justify-content:center;background:hsl(var(--muted));color:hsl(var(--fg));transition:all .2s;cursor:pointer;border:none}
+.nav-icon-btn:hover{background:hsl(var(--accent));color:hsl(var(--primary))}
+.cart-badge{position:absolute;top:-4px;right:-4px;background:hsl(var(--secondary));color:hsl(var(--secondary-fg));font-size:.65rem;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+/* ===== BOTTOM NAV ===== */
+#bottomnav{position:fixed;bottom:0;left:0;right:0;z-index:50;background:hsl(var(--card));border-top:1px solid hsl(var(--border));padding:.5rem;display:flex;justify-content:space-around;align-items:center}
+.bottom-nav-item{display:flex;flex-direction:column;align-items:center;gap:.2rem;padding:.4rem .75rem;border-radius:.75rem;cursor:pointer;transition:all .2s;background:none;border:none;color:hsl(var(--muted-fg));min-width:56px}
+.bottom-nav-item.active{color:hsl(var(--primary))}.bottom-nav-item.active .bnav-icon{background:hsl(var(--accent))}
+.bnav-icon{width:32px;height:32px;border-radius:.625rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.bnav-label{font-size:.65rem;font-weight:600}
+
+/* ===== LAYOUT WRAPPER ===== */
+.page-content{max-width:1200px;margin:0 auto;padding:1rem 1rem 5rem}
+
+/* ===== LOGIN PAGE ===== */
+#page-login{background:hsl(var(--bg));display:flex;align-items:center;justify-content:center;min-height:100vh;padding:1rem;position:relative;overflow:hidden}
+.login-bg{position:absolute;inset:0;overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.35;animation:blobFloat 8s ease-in-out infinite}
+.blob-1{width:400px;height:400px;background:hsl(var(--primary));top:-100px;left:-100px;animation-delay:0s}
+.blob-2{width:350px;height:350px;background:hsl(var(--secondary));bottom:-80px;right:-80px;animation-delay:-3s}
+.blob-3{width:280px;height:280px;background:hsl(150 50% 50%);top:50%;left:50%;transform:translate(-50%,-50%);animation-delay:-5s}
+@keyframes blobFloat{0%,100%{transform:scale(1) translate(0,0)}33%{transform:scale(1.08) translate(20px,-15px)}66%{transform:scale(.95) translate(-15px,20px)}}
+.login-card{position:relative;z-index:2;width:100%;max-width:420px;background:hsl(var(--card));border-radius:1.5rem;box-shadow:0 20px 60px hsla(var(--shadow)/.2);padding:2rem;animation:slideUp .5s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.login-header{text-align:center;margin-bottom:1.75rem}
+.login-logo{width:60px;height:60px;background:hsl(var(--primary));border-radius:1.125rem;display:flex;align-items:center;justify-content:center;margin:0 auto .75rem;color:#fff;font-weight:800;font-size:1.5rem}
+.login-title{font-size:1.75rem;font-weight:800;color:hsl(var(--fg))}
+.login-sub{font-size:.875rem;color:hsl(var(--muted-fg));margin-top:.25rem}
+.login-step{animation:fadeIn .3s ease}
+.otp-inputs{display:flex;gap:.625rem;justify-content:center;margin:1.25rem 0}
+.otp-input{width:48px;height:56px;text-align:center;font-size:1.5rem;font-weight:700;border:2px solid hsl(var(--border));border-radius:.75rem;background:hsl(var(--muted));color:hsl(var(--fg));transition:all .2s}
+.otp-input:focus{border-color:hsl(var(--primary));background:hsl(var(--card))}
+.divider{display:flex;align-items:center;gap:.75rem;margin:1rem 0;color:hsl(var(--muted-fg));font-size:.825rem}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:hsl(var(--border))}
+.link-btn{background:none;border:none;color:hsl(var(--primary));font-weight:600;cursor:pointer;font-size:.875rem;font-family:inherit;padding:0}
+.link-btn:hover{text-decoration:underline}
+
+/* ===== HOME PAGE ===== */
+.hero-slider{position:relative;border-radius:1.25rem;overflow:hidden;margin-bottom:1.5rem;height:200px}
+@media(min-width:640px){.hero-slider{height:260px}}
+.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity .6s ease;border-radius:1.25rem;overflow:hidden}
+.hero-slide.active{opacity:1}
+.hero-slide-bg{width:100%;height:100%;object-fit:cover}
+.hero-slide-overlay{position:absolute;inset:0;background:linear-gradient(135deg,hsla(150,60%,10%,.7) 0%,transparent 60%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem}
+.hero-dots{position:absolute;bottom:.75rem;left:50%;transform:translateX(-50%);display:flex;gap:.375rem}
+.hero-dot{width:8px;height:8px;border-radius:4px;background:rgba(255,255,255,.5);transition:all .3s;cursor:pointer}
+.hero-dot.active{width:24px;background:#fff}
+.category-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-bottom:1.5rem}
+.category-card{display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:.875rem .5rem;background:hsl(var(--card));border-radius:1rem;border:1.5px solid hsl(var(--border));cursor:pointer;transition:all .2s}
+.category-card:hover{border-color:hsl(var(--primary));background:hsl(var(--accent));transform:translateY(-2px)}
+.cat-icon{width:44px;height:44px;border-radius:.875rem;display:flex;align-items:center;justify-content:center;font-size:1.25rem}
+.cat-label{font-size:.75rem;font-weight:600;text-align:center;color:hsl(var(--fg))}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.section-title{font-size:1.125rem;font-weight:700}
+.h-scroll{display:flex;gap:1rem;overflow-x:auto;padding-bottom:.75rem;scrollbar-width:none;-ms-overflow-style:none}
+.h-scroll::-webkit-scrollbar{display:none}
+
+/* ===== PRODUCT CARD ===== */
+.product-card{background:hsl(var(--card));border-radius:1rem;border:1px solid hsl(var(--border));overflow:hidden;transition:all .25s;flex-shrink:0}
+.product-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px hsla(var(--shadow)/.14)}
+.product-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:hsl(var(--muted))}
+.product-card-body{padding:.875rem}
+.product-name{font-size:.875rem;font-weight:600;line-height:1.3;margin-bottom:.25rem;color:hsl(var(--fg))}
+.product-meta{font-size:.75rem;color:hsl(var(--muted-fg));margin-bottom:.5rem}
+.product-price{font-size:1rem;font-weight:700;color:hsl(var(--primary))}
+.product-price-old{font-size:.75rem;color:hsl(var(--muted-fg));text-decoration:line-through;margin-left:.375rem}
+.product-actions{display:flex;align-items:center;justify-content:space-between;margin-top:.625rem}
+.qty-control{display:flex;align-items:center;gap:.375rem}
+.qty-btn{width:28px;height:28px;border-radius:.5rem;background:hsl(var(--muted));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:600;color:hsl(var(--fg));transition:all .15s}
+.qty-btn:hover{background:hsl(var(--accent));color:hsl(var(--primary))}
+.qty-val{font-size:.875rem;font-weight:700;min-width:20px;text-align:center}
+.add-cart-btn{padding:.4rem .875rem;background:hsl(var(--primary));color:#fff;border-radius:.625rem;font-size:.8rem;font-weight:600;border:none;cursor:pointer;transition:all .15s}
+.add-cart-btn:hover{opacity:.88}
+.add-cart-btn.added{background:hsl(var(--success));animation:pop .3s ease}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
+
+/* ===== PRODUCT GRID ===== */
+.product-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+@media(min-width:640px){.product-grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:900px){.product-grid{grid-template-columns:repeat(4,1fr)}}
+.product-grid .product-card{width:100%;flex-shrink:unset}
+
+/* ===== H-SCROLL PRODUCT ===== */
+.h-scroll .product-card{width:160px}
+@media(min-width:640px){.h-scroll .product-card{width:180px}}
+
+/* ===== TABS ===== */
+.tab-bar{display:flex;gap:.375rem;overflow-x:auto;padding:.25rem;background:hsl(var(--muted));border-radius:1rem;margin-bottom:1.25rem;scrollbar-width:none}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab-btn{flex-shrink:0;padding:.5rem 1rem;border-radius:.75rem;font-size:.825rem;font-weight:600;background:none;border:none;color:hsl(var(--muted-fg));cursor:pointer;transition:all .2s;white-space:nowrap}
+.tab-btn.active{background:hsl(var(--card));color:hsl(var(--primary));box-shadow:0 2px 8px hsla(var(--shadow)/.1)}
+
+/* ===== SEARCH BAR ===== */
+.search-bar{position:relative;margin-bottom:1.25rem}
+.search-bar input{padding:.75rem 1rem .75rem 3rem;border-radius:2rem;background:hsl(var(--muted));border:2px solid transparent;color:hsl(var(--fg));font-size:.9rem;width:100%;transition:all .2s}
+.search-bar input:focus{background:hsl(var(--card));border-color:hsl(var(--primary))}
+.search-bar-icon{position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:hsl(var(--muted-fg))}
+
+/* ===== PAGE HEADER ===== */
+.page-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;padding-top:.25rem}
+.back-btn{width:38px;height:38px;border-radius:.75rem;background:hsl(var(--muted));display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;color:hsl(var(--fg));transition:all .2s;flex-shrink:0}
+.back-btn:hover{background:hsl(var(--accent));color:hsl(var(--primary))}
+.page-title{font-size:1.35rem;font-weight:800}
+
+/* ===== CART PAGE ===== */
+.cart-item{display:flex;gap:1rem;padding:1rem;background:hsl(var(--card));border-radius:1rem;border:1px solid hsl(var(--border));margin-bottom:.875rem;animation:fadeIn .3s ease}
+.cart-item-img{width:76px;height:76px;border-radius:.75rem;object-fit:cover;background:hsl(var(--muted));flex-shrink:0}
+.cart-item-info{flex:1;min-width:0}
+.cart-item-name{font-size:.9rem;font-weight:600;margin-bottom:.25rem}
+.cart-item-price{font-size.875rem;color:hsl(var(--muted-fg));font-size:.825rem}
+.cart-item-footer{display:flex;align-items:center;justify-content:space-between;margin-top:.5rem}
+.cart-summary{background:hsl(var(--card));border-radius:1rem;border:1px solid hsl(var(--border));padding:1.25rem}
+.summary-row{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;font-size:.9rem}
+.summary-row.total{border-top:2px solid hsl(var(--border));margin-top:.5rem;padding-top:.875rem;font-size:1.05rem;font-weight:700}
+.summary-row.total .val{color:hsl(var(--primary));font-size:1.15rem}
+.empty-cart{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4rem 2rem;text-align:center}
+.empty-icon{width:80px;height:80px;border-radius:50%;background:hsl(var(--accent));display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem}
+
+/* ===== PAY PAGE ===== */
+.wallet-card{background:linear-gradient(135deg,hsl(var(--primary)),hsl(150 70% 20%));border-radius:1.5rem;padding:1.75rem;color:#fff;margin-bottom:1.5rem;position:relative;overflow:hidden}
+.wallet-card::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.08)}
+.wallet-card::after{content:'';position:absolute;bottom:-60px;left:-20px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.05)}
+.wallet-balance{font-size:2.25rem;font-weight:800;position:relative;z-index:1}
+.amount-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-bottom:1rem}
+.amount-chip{padding:.75rem;background:hsl(var(--muted));border-radius:.75rem;text-align:center;font-weight:700;font-size:.9rem;cursor:pointer;border:2px solid transparent;transition:all .2s}
+.amount-chip:hover,.amount-chip.selected{border-color:hsl(var(--primary));background:hsl(var(--accent));color:hsl(var(--primary))}
+.card-input{letter-spacing:.12em;font-variant-numeric:tabular-nums}
+.upi-apps{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.75rem}
+.upi-app{display:flex;flex-direction:column;align-items:center;gap:.35rem;padding:.625rem .875rem;background:hsl(var(--muted));border-radius:.75rem;cursor:pointer;transition:all .2s;border:1.5px solid transparent}
+.upi-app:hover{border-color:hsl(var(--primary));background:hsl(var(--accent))}
+.upi-icon{width:36px;height:36px;border-radius:.625rem;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.875rem;color:#fff}
+.txn-item{display:flex;align-items:center;gap.875rem;padding:.875rem 0;border-bottom:1px solid hsl(var(--border));gap:.875rem}
+.txn-icon{width:40px;height:40px;border-radius:.875rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.txn-info{flex:1}
+.txn-amount{font-weight:700;font-size:.95rem}
+.txn-amount.credit{color:hsl(var(--success))}.txn-amount.debit{color:hsl(var(--danger))}
+
+/* ===== SETTINGS PAGE ===== */
+.settings-section{background:hsl(var(--card));border-radius:1rem;border:1px solid hsl(var(--border));overflow:hidden;margin-bottom:1.25rem}
+.settings-header{padding:1rem 1.25rem;background:hsl(var(--accent));border-bottom:1px solid hsl(var(--border))}
+.settings-header-title{font-size:.875rem;font-weight:700;color:hsl(var(--accent-fg));text-transform:uppercase;letter-spacing:.06em}
+.settings-row{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid hsl(var(--border))}
+.settings-row:last-child{border-bottom:none}
+.settings-label{font-size:.95rem;font-weight:500}
+.settings-sub{font-size:.75rem;color:hsl(var(--muted-fg));margin-top:.1rem}
+.toggle{width:50px;height:28px;border-radius:14px;background:hsl(var(--muted));border:2px solid hsl(var(--border));position:relative;cursor:pointer;transition:all .25s;flex-shrink:0}
+.toggle.on{background:hsl(var(--primary));border-color:hsl(var(--primary))}
+.toggle-thumb{position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .25s;box-shadow:0 2px 4px rgba(0,0,0,.2)}
+.toggle.on .toggle-thumb{transform:translateX(22px)}
+.profile-card{display:flex;align-items:center;gap:1rem;padding:1.25rem}
+.avatar{width:56px;height:56px;border-radius:50%;background:hsl(var(--primary));color:#fff;font-weight:800;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+
+/* ===== OFFER BANNER ===== */
+.offer-banner{border-radius:1.25rem;overflow:hidden;position:relative;height:100px;display:flex;align-items:center;padding:1.5rem;margin-bottom:1.5rem;background:linear-gradient(135deg,hsl(var(--secondary)),hsl(40 90% 40%))}
+.offer-banner-content{position:relative;z-index:1}
+
+/* ===== TOAST ===== */
+#toast{position:fixed;bottom:5.5rem;left:50%;transform:translateX(-50%) translateY(100px);background:hsl(var(--primary));color:#fff;padding:.875rem 1.5rem;border-radius:1rem;font-weight:600;font-size:.9rem;z-index:200;transition:transform .3s ease;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.2);display:flex;align-items:center;gap:.5rem}
+#toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ===== SUCCESS OVERLAY ===== */
+.success-overlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;animation:fadeIn .3s ease}
+.success-card{background:hsl(var(--card));border-radius:1.5rem;padding:2.5rem 2rem;text-align:center;max-width:320px;width:90%;animation:slideUp .4s ease}
+.success-icon{width:72px;height:72px;border-radius:50%;background:hsl(var(--success));color:#fff;font-size:2rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem}
+
+/* ===== BADGE ===== */
+.badge{display:inline-flex;align-items:center;padding:.2rem .625rem;border-radius:2rem;font-size:.7rem;font-weight:700;letter-spacing:.03em}
+.badge-primary{background:hsl(var(--accent));color:hsl(var(--primary))}
+.badge-secondary{background:hsl(40 90% 90%);color:hsl(40 80% 30%)}
+.badge-discount{background:hsl(var(--danger));color:#fff}
+
+/* ===== PROMO SECTION ===== */
+.promo-grid{display:grid;grid-template-columns:1fr 1fr;gap:.875rem;margin-bottom:1.5rem}
+.promo-card{border-radius:1.125rem;padding:1.25rem;color:#fff;position:relative;overflow:hidden;cursor:pointer}
+.promo-card::after{content:'';position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.1)}
+
+/* ===== RESPONSIVE FIXES ===== */
+@media(max-width:400px){.category-grid{grid-template-columns:repeat(4,1fr)}.cat-label{font-size:.65rem}}
+@media(min-width:768px){#bottomnav{display:none}#topnav .nav-search{display:flex}}
+</style>
+</head>
+<body>
+
+<!-- ========== TOP NAV ========== -->
+<nav id="topnav" class="hidden">
+  <div class="topnav-inner">
+    <a class="logo" onclick="showPage('home')">
+      <div class="logo-mark">R</div>
+      <span class="logo-name">Real Choice</span>
+    </a>
+    <div class="nav-search" style="display:flex">
+      <svg class="nav-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" placeholder="Search products..." id="globalSearch" oninput="handleGlobalSearch(this.value)" data-testid="input-global-search"/>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-icon-btn" onclick="showPage('cart')" data-testid="btn-nav-cart" title="Cart">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </button>
+      <button class="nav-icon-btn" onclick="showPage('settings')" data-testid="btn-nav-settings" title="Settings">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M5 12H3M21 12h-2M12 5V3M12 21v-2"/><path d="M19.07 4.93A10 10 0 0 0 4.93 4.93"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ========== BOTTOM NAV ========== -->
+<div id="bottomnav" class="hidden">
+  <button class="bottom-nav-item" id="bn-home" onclick="showPage('home')" data-testid="btn-bnav-home">
+    <div class="bnav-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    </div>
+    <span class="bnav-label">Home</span>
+  </button>
+  <button class="bottom-nav-item" id="bn-groceries" onclick="showPage('groceries')" data-testid="btn-bnav-groceries">
+    <div class="bnav-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    </div>
+    <span class="bnav-label">Grocery</span>
+  </button>
+  <button class="bottom-nav-item" id="bn-accessories" onclick="showPage('accessories')" data-testid="btn-bnav-accessories">
+    <div class="bnav-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+    </div>
+    <span class="bnav-label">Accessories</span>
+  </button>
+  <button class="bottom-nav-item" id="bn-beauty" onclick="showPage('beauty')" data-testid="btn-bnav-beauty">
+    <div class="bnav-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    </div>
+    <span class="bnav-label">Beauty</span>
+  </button>
+  <button class="bottom-nav-item" id="bn-cart" onclick="showPage('cart')" data-testid="btn-bnav-cart">
+    <div class="bnav-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+    </div>
+    <span class="bnav-label">Cart</span>
+  </button>
+  <button class="bottom-nav-item" id="bn-settings" onclick="showPage('settings')" data-testid="btn-bnav-settings">
+    <div class="bnav-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </div>
+    <span class="bnav-label">Profile</span>
+  </button>
+</div>
+
+<!-- ========== TOAST ========== -->
+<div id="toast"></div>
+
+<!-- ========== LOGIN PAGE ========== -->
+<div id="page-login" class="page active">
+  <div class="login-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+  <div class="login-card">
+    <div class="login-header">
+      <div class="login-logo">R</div>
+      <div class="login-title">Real Choice</div>
+      <div class="login-sub">Premium groceries, accessories &amp; beauty</div>
+    </div>
+
+    <!-- Step 1: Credentials -->
+    <div id="step-login" class="login-step">
+      <div class="input-group mb-4">
+        <label for="loginEmail">Email or Phone Number</label>
+        <input id="loginEmail" class="input" type="text" placeholder="Enter your email or phone" data-testid="input-login-email"/>
+      </div>
+      <div class="input-group mb-4">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <label for="loginPass">Password</label>
+          <button class="link-btn" onclick="showLoginStep('forgot')" data-testid="btn-forgot-password">Forgot?</button>
+        </div>
+        <input id="loginPass" class="input" type="password" placeholder="Enter password" data-testid="input-login-password"/>
+      </div>
+      <button class="btn btn-primary btn-full btn-lg mt-2" onclick="handleSignIn()" data-testid="btn-sign-in">
+        Sign In &rarr;
+      </button>
+      <div class="divider">or</div>
+      <button class="btn btn-outline btn-full" onclick="handleSignUp()" data-testid="btn-sign-up">
+        Create an Account
+      </button>
+    </div>
+
+    <!-- Step 2: OTP -->
+    <div id="step-otp" class="login-step hidden">
+      <div style="text-align:center;margin-bottom:1rem">
+        <div style="font-size:1.2rem;font-weight:700;margin-bottom:.35rem">Verify Your Account</div>
+        <div style="font-size:.85rem;color:hsl(var(--muted-fg))">Enter the 6-digit OTP sent to your number</div>
+      </div>
+      <div class="otp-inputs" id="otpInputs">
+        <input class="otp-input" maxlength="1" type="text" inputmode="numeric" data-testid="input-otp-1" oninput="otpMove(this,1)"/>
+        <input class="otp-input" maxlength="1" type="text" inputmode="numeric" data-testid="input-otp-2" oninput="otpMove(this,2)"/>
+        <input class="otp-input" maxlength="1" type="text" inputmode="numeric" data-testid="input-otp-3" oninput="otpMove(this,3)"/>
+        <input class="otp-input" maxlength="1" type="text" inputmode="numeric" data-testid="input-otp-4" oninput="otpMove(this,4)"/>
+        <input class="otp-input" maxlength="1" type="text" inputmode="numeric" data-testid="input-otp-5" oninput="otpMove(this,5)"/>
+        <input class="otp-input" maxlength="1" type="text" inputmode="numeric" data-testid="input-otp-6" oninput="otpMove(this,6)"/>
+      </div>
+      <button class="btn btn-primary btn-full btn-lg" onclick="verifyOtp()" data-testid="btn-verify-otp">Verify &amp; Continue</button>
+      <div style="text-align:center;margin-top:1rem">
+        <span style="font-size:.85rem;color:hsl(var(--muted-fg))">Didn't receive it? </span>
+        <button class="link-btn" id="resendBtn" onclick="resendOtp()" data-testid="btn-resend-otp">Resend (<span id="resendTimer">30</span>s)</button>
+      </div>
+      <button class="btn btn-ghost btn-full mt-2" onclick="showLoginStep('login')" data-testid="btn-back-to-login">Back</button>
+    </div>
+
+    <!-- Step 3: Forgot Password -->
+    <div id="step-forgot" class="login-step hidden">
+      <div style="text-align:center;margin-bottom:1rem">
+        <div style="font-size:1.2rem;font-weight:700;margin-bottom:.35rem">Reset Password</div>
+        <div style="font-size:.85rem;color:hsl(var(--muted-fg))">We'll send a reset link to your email</div>
+      </div>
+      <div class="input-group mb-4">
+        <label for="resetEmail">Email Address</label>
+        <input id="resetEmail" class="input" type="email" placeholder="Enter your email" data-testid="input-reset-email"/>
+      </div>
+      <button class="btn btn-primary btn-full btn-lg" onclick="handleForgot()" data-testid="btn-send-reset">Send Reset Link</button>
+      <button class="btn btn-ghost btn-full mt-2" onclick="showLoginStep('login')" data-testid="btn-back-from-forgot">Back to Sign In</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== HOME PAGE ========== -->
+<div id="page-home" class="page">
+  <div class="page-content">
+    <!-- Hero Slider -->
+    <div class="hero-slider" id="heroSlider">
+      <div class="hero-slide active" id="slide-0">
+        <img class="hero-slide-bg" src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=900&q=80" alt="Fresh Groceries" loading="lazy"/>
+        <div class="hero-slide-overlay">
+          <span class="badge badge-discount" style="margin-bottom:.5rem">UP TO 40% OFF</span>
+          <div style="color:#fff;font-size:1.4rem;font-weight:800;line-height:1.2">Fresh Fruits &amp;<br/>Vegetables</div>
+          <div style="color:rgba(255,255,255,.8);font-size:.85rem;margin-top:.25rem">Farm to your doorstep</div>
+        </div>
+      </div>
+      <div class="hero-slide" id="slide-1">
+        <img class="hero-slide-bg" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=900&q=80" alt="Accessories" loading="lazy"/>
+        <div class="hero-slide-overlay" style="background:linear-gradient(135deg,hsla(40,80%,10%,.75) 0%,transparent 60%)">
+          <span class="badge badge-discount" style="margin-bottom:.5rem">NEW ARRIVALS</span>
+          <div style="color:#fff;font-size:1.4rem;font-weight:800;line-height:1.2">Premium<br/>Accessories</div>
+          <div style="color:rgba(255,255,255,.8);font-size:.85rem;margin-top:.25rem">Watches, jewellery &amp; more</div>
+        </div>
+      </div>
+      <div class="hero-slide" id="slide-2">
+        <img class="hero-slide-bg" src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=900&q=80" alt="Beauty" loading="lazy"/>
+        <div class="hero-slide-overlay" style="background:linear-gradient(135deg,hsla(300,50%,10%,.75) 0%,transparent 60%)">
+          <span class="badge badge-secondary" style="margin-bottom:.5rem">BESTSELLERS</span>
+          <div style="color:#fff;font-size:1.4rem;font-weight:800;line-height:1.2">Beauty &amp;<br/>Skin Care</div>
+          <div style="color:rgba(255,255,255,.8);font-size:.85rem;margin-top:.25rem">Glow up with the best</div>
+        </div>
+      </div>
+      <div class="hero-dots">
+        <div class="hero-dot active" onclick="goSlide(0)" id="dot-0"></div>
+        <div class="hero-dot" onclick="goSlide(1)" id="dot-1"></div>
+        <div class="hero-dot" onclick="goSlide(2)" id="dot-2"></div>
+      </div>
+    </div>
+
+    <!-- Categories -->
+    <div class="section-header"><span class="section-title">Shop By Category</span></div>
+    <div class="category-grid">
+      <div class="category-card" onclick="showPage('groceries')" data-testid="cat-groceries">
+        <div class="cat-icon" style="background:hsl(150 60% 90%)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="hsl(150 60% 28%)" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <span class="cat-label">Groceries</span>
+      </div>
+      <div class="category-card" onclick="showPage('accessories')" data-testid="cat-accessories">
+        <div class="cat-icon" style="background:hsl(40 90% 92%)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="hsl(40 80% 35%)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <span class="cat-label">Accessories</span>
+      </div>
+      <div class="category-card" onclick="showPage('beauty')" data-testid="cat-beauty">
+        <div class="cat-icon" style="background:hsl(300 50% 93%)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="hsl(300 50% 40%)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <span class="cat-label">Beauty</span>
+      </div>
+      <div class="category-card" onclick="showPage('offers')" data-testid="cat-offers">
+        <div class="cat-icon" style="background:hsl(0 80% 93%)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="hsl(0 70% 45%)" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+        </div>
+        <span class="cat-label">Offers</span>
+      </div>
+    </div>
+
+    <!-- Promo Cards -->
+    <div class="promo-grid">
+      <div class="promo-card" style="background:linear-gradient(135deg,hsl(150 60% 28%),hsl(150 50% 20%))" onclick="showPage('groceries')">
+        <div style="font-size:.75rem;font-weight:600;opacity:.8;margin-bottom:.25rem">LIMITED TIME</div>
+        <div style="font-size:1.2rem;font-weight:800;line-height:1.2">20% Off<br/>Fresh Produce</div>
+      </div>
+      <div class="promo-card" style="background:linear-gradient(135deg,hsl(40 90% 50%),hsl(30 85% 40%))" onclick="showPage('accessories')">
+        <div style="font-size:.75rem;font-weight:600;opacity:.8;margin-bottom:.25rem">FLASH SALE</div>
+        <div style="font-size:1.2rem;font-weight:800;line-height:1.2">Watches<br/>From ₹999</div>
+      </div>
+    </div>
+
+    <!-- Fresh Picks -->
+    <div class="section-header">
+      <span class="section-title">Fresh Picks</span>
+      <button class="btn btn-ghost btn-sm text-primary" onclick="showPage('groceries')">See all</button>
+    </div>
+    <div class="h-scroll mb-6" id="freshPicksScroll"></div>
+
+    <!-- Trending -->
+    <div class="section-header">
+      <span class="section-title">Trending Now</span>
+      <button class="btn btn-ghost btn-sm text-primary" onclick="showPage('accessories')">See all</button>
+    </div>
+    <div class="product-grid" id="trendingGrid"></div>
+  </div>
+</div>
+
+<!-- ========== GROCERIES PAGE ========== -->
+<div id="page-groceries" class="page">
+  <div class="page-content">
+    <div class="page-header">
+      <button class="back-btn" onclick="showPage('home')" data-testid="btn-back-groceries">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      </button>
+      <span class="page-title">Groceries</span>
+    </div>
+    <div class="search-bar">
+      <svg class="search-bar-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" placeholder="Search groceries..." id="grocerySearch" oninput="filterProducts('groceries',this.value)" data-testid="input-search-groceries"/>
+    </div>
+    <div class="tab-bar" id="groceryTabs"></div>
+    <div class="product-grid" id="groceryGrid"></div>
+  </div>
+</div>
+
+<!-- ========== ACCESSORIES PAGE ========== -->
+<div id="page-accessories" class="page">
+  <div class="page-content">
+    <div class="page-header">
+      <button class="back-btn" onclick="showPage('home')" data-testid="btn-back-accessories">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      </button>
+      <span class="page-title">Accessories</span>
+    </div>
+    <div class="search-bar">
+      <svg class="search-bar-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" placeholder="Search accessories..." id="accessorySearch" oninput="filterProducts('accessories',this.value)" data-testid="input-search-accessories"/>
+    </div>
+    <div class="tab-bar" id="accessoryTabs"></div>
+    <div class="product-grid" id="accessoryGrid"></div>
+  </div>
+</div>
+
+<!-- ========== BEAUTY PAGE ========== -->
+<div id="page-beauty" class="page">
+  <div class="page-content">
+    <div class="page-header">
+      <button class="back-btn" onclick="showPage('home')" data-testid="btn-back-beauty">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      </button>
+      <span class="page-title">Beauty</span>
+    </div>
+    <div class="search-bar">
+      <svg class="search-bar-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" placeholder="Search beauty products..." id="beautySearch" oninput="filterProducts('beauty',this.value)" data-testid="input-search-beauty"/>
+    </div>
+    <div class="tab-bar" id="beautyTabs"></div>
+    <div class="product-grid" id="beautyGrid"></div>
+  </div>
+</div>
+
+<!-- ========== OFFERS PAGE ========== -->
+<div id="page-offers" class="page">
+  <div class="page-content">
+    <div class="page-header">
+      <button class="back-btn" onclick="showPage('home')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      </button>
+      <span class="page-title">Offers &amp; Deals</span>
+    </div>
+    <div id="offersContent"></div>
+  </div>
+</div>
+
+<!-- ========== CART PAGE ========== -->
+<div id="page-cart" class="page">
+  <div class="page-content">
+    <div class="page-header">
+      <button class="back-btn" onclick="history.back ? showPage(prevPage||'home') : showPage('home')" data-testid="btn-back-cart">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      </button>
+      <span class="page-title">My Cart</span>
+      <span id="cartItemCount" class="badge badge-primary ml-auto"></span>
+    </div>
+    <div id="cartItems"></div>
+    <div id="cartSummary"></div>
+  </div>
+</div>
+
+<!-- ========== SETTINGS PAGE ========== -->
+<div id="page-settings" class="page">
+  <div class="page-content">
+    <div class="page-header">
+      <button class="back-btn" onclick="showPage('home')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      </button>
+      <span class="page-title">Settings</span>
+    </div>
+
+    <!-- Profile -->
+    <div class="settings-section">
+      <div class="profile-card">
+        <div class="avatar" id="userAvatar">U</div>
+        <div>
+          <div style="font-weight:700;font-size:1.05rem" id="userName">User</div>
+          <div style="font-size:.85rem;color:hsl(var(--muted-fg))" id="userEmail">user@example.com</div>
+        </div>
+        <button class="btn btn-outline btn-sm ml-auto" onclick="showPage('pay')">RC Pay</button>
+      </div>
+    </div>
+
+    <!-- Appearance -->
+    <div class="settings-section">
+      <div class="settings-header"><div class="settings-header-title">Appearance</div></div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">Dark Mode</div>
+          <div class="settings-sub">Switch to dark theme</div>
+        </div>
+        <div class="toggle" id="darkToggle" onclick="toggleDark()" data-testid="toggle-dark-mode">
+          <div class="toggle-thumb"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Language -->
+    <div class="settings-section">
+      <div class="settings-header"><div class="settings-header-title">Language &amp; Region</div></div>
+      <div class="settings-row">
+        <div class="settings-label">Language</div>
+        <select class="input" style="width:auto;padding:.4rem .75rem;border-radius:.625rem" id="langSelect" data-testid="select-language">
+          <option value="en">English</option>
+          <option value="hi">Hindi</option>
+          <option value="ta">Tamil</option>
+          <option value="te">Telugu</option>
+          <option value="kn">Kannada</option>
+          <option value="ml">Malayalam</option>
+        </select>
+      </div>
+      <div class="settings-row">
+        <div class="settings-label">Currency</div>
+        <select class="input" style="width:auto;padding:.4rem .75rem;border-radius:.625rem" id="currencySelect" data-testid="select-currency">
+          <option value="INR">INR (&#8377;)</option>
+          <option value="USD">USD ($)</option>
+          <option value="EUR">EUR (&euro;)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Notifications -->
+    <div class="settings-section">
+      <div class="settings-header"><div class="settings-header-title">Notifications</div></div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">Push Notifications</div>
+          <div class="settings-sub">Offers, order updates</div>
+        </div>
+        <div class="toggle on" id="notifToggle" onclick="toggleNotif()" data-testid="toggle-notifications">
+          <div class="toggle-thumb"></div>
+        </div>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">Email Alerts</div>
+          <div class="settings-sub">Promotional emails</div>
+        </div>
+        <div class="toggle" id="emailToggle" onclick="toggleEmail()" data-testid="toggle-email-alerts">
+          <div class="toggle-thumb"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <button class="btn btn-primary btn-full btn-lg" onclick="saveSettings()" data-testid="btn-save-settings">Save Settings</button>
+    <button class="btn btn-danger btn-full mt-2" onclick="handleLogout()" data-testid="btn-logout" style="margin-top:.75rem">Sign Out</button>
+  </div>
+</div>
+
+<!-- ========== PAY PAGE ========== -->
+<div id="page-pay" class="page">
+  <div class="page-content">
+    <div class="page-header">
+      <button class="back-btn" onclick="showPage('settings')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      </button>
+      <span class="page-title">Real Choice Pay</span>
+    </div>
+
+    <!-- Wallet -->
+    <div class="wallet-card">
+      <div style="font-size:.875rem;opacity:.8;margin-bottom:.5rem;position:relative;z-index:1">Wallet Balance</div>
+      <div class="wallet-balance" id="walletBalance">&#8377;0.00</div>
+      <div style="font-size:.8rem;opacity:.7;margin-top:.25rem;position:relative;z-index:1">Real Choice Wallet</div>
+      <button class="btn btn-secondary btn-sm" style="margin-top:1rem;position:relative;z-index:1" onclick="scrollToAddMoney()" data-testid="btn-add-money-wallet">+ Add Money</button>
+    </div>
+
+    <!-- Add Money -->
+    <div class="settings-section" id="addMoneySection">
+      <div class="settings-header"><div class="settings-header-title">Add Money</div></div>
+      <div style="padding:1.25rem">
+        <div class="amount-grid">
+          <div class="amount-chip" onclick="selectAmount(100)" data-testid="chip-100">&#8377;100</div>
+          <div class="amount-chip" onclick="selectAmount(200)" data-testid="chip-200">&#8377;200</div>
+          <div class="amount-chip" onclick="selectAmount(500)" data-testid="chip-500">&#8377;500</div>
+          <div class="amount-chip" onclick="selectAmount(1000)" data-testid="chip-1000">&#8377;1000</div>
+        </div>
+        <div class="input-group mb-4">
+          <label>Or enter custom amount</label>
+          <input class="input" type="number" id="customAmount" placeholder="Enter amount (&#8377;)" data-testid="input-custom-amount"/>
+        </div>
+        <button class="btn btn-primary btn-full" onclick="addToWallet()" data-testid="btn-add-to-wallet">Add to Wallet</button>
+      </div>
+    </div>
+
+    <!-- Credit Card -->
+    <div class="settings-section">
+      <div class="settings-header"><div class="settings-header-title">Add Credit / Debit Card</div></div>
+      <div style="padding:1.25rem;display:flex;flex-direction:column;gap:.875rem">
+        <div class="input-group">
+          <label>Card Number</label>
+          <input class="input card-input" id="cardNumber" type="text" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" oninput="formatCard(this)" data-testid="input-card-number"/>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+          <div class="input-group">
+            <label>Expiry (MM/YY)</label>
+            <input class="input" id="cardExpiry" type="text" placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this)" data-testid="input-card-expiry"/>
+          </div>
+          <div class="input-group">
+            <label>CVV</label>
+            <input class="input" id="cardCvv" type="password" placeholder="CVV" maxlength="3" data-testid="input-card-cvv"/>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Cardholder Name</label>
+          <input class="input" id="cardName" type="text" placeholder="Name on card" data-testid="input-card-name"/>
+        </div>
+        <button class="btn btn-primary btn-full" onclick="saveCard()" data-testid="btn-save-card">Save Card</button>
+      </div>
+    </div>
+
+    <!-- UPI -->
+    <div class="settings-section">
+      <div class="settings-header"><div class="settings-header-title">Link UPI App</div></div>
+      <div style="padding:1.25rem">
+        <div class="upi-apps">
+          <div class="upi-app" onclick="linkUpi('GPay')" data-testid="btn-link-gpay">
+            <div class="upi-icon" style="background:#4285F4">G</div>
+            <span style="font-size:.7rem;font-weight:600">GPay</span>
+          </div>
+          <div class="upi-app" onclick="linkUpi('PhonePe')" data-testid="btn-link-phonepe">
+            <div class="upi-icon" style="background:#5f259f">Pe</div>
+            <span style="font-size:.7rem;font-weight:600">PhonePe</span>
+          </div>
+          <div class="upi-app" onclick="linkUpi('Paytm')" data-testid="btn-link-paytm">
+            <div class="upi-icon" style="background:#00BAF2">Pt</div>
+            <span style="font-size:.7rem;font-weight:600">Paytm</span>
+          </div>
+          <div class="upi-app" onclick="linkUpi('BHIM')" data-testid="btn-link-bhim">
+            <div class="upi-icon" style="background:#FF9100">Bh</div>
+            <span style="font-size:.7rem;font-weight:600">BHIM</span>
+          </div>
+        </div>
+        <div class="input-group mt-4">
+          <label>Or enter UPI ID</label>
+          <input class="input" id="upiId" type="text" placeholder="yourname@upi" data-testid="input-upi-id"/>
+        </div>
+        <button class="btn btn-outline btn-full mt-2" onclick="linkUpiManual()" data-testid="btn-link-upi-manual">Link UPI ID</button>
+      </div>
+    </div>
+
+    <!-- Recent Transactions -->
+    <div class="settings-section">
+      <div class="settings-header"><div class="settings-header-title">Recent Transactions</div></div>
+      <div style="padding:0 1.25rem" id="transactionList"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const PRODUCTS = {
+  groceries: {
+    "Fruits": [
+      {id:"g1",name:"Fresh Red Apples",meta:"Pack of 6 (~1kg)",price:120,oldPrice:149,img:"https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=400&q=80"},
+      {id:"g2",name:"Premium Bananas",meta:"Dozen (~500g)",price:60,oldPrice:79,img:"https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400&q=80"},
+      {id:"g3",name:"Nagpur Oranges",meta:"Pack of 6 (~900g)",price:90,oldPrice:110,img:"https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=400&q=80"},
+      {id:"g4",name:"Alphonso Mangoes",meta:"Pack of 4 (~800g)",price:220,oldPrice:280,img:"https://images.unsplash.com/photo-1587735243615-c03f25aaff15?w=400&q=80"},
+      {id:"g5",name:"Fresh Strawberries",meta:"Punnet (250g)",price:180,oldPrice:220,img:"https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400&q=80"},
+      {id:"g6",name:"Green Grapes",meta:"Bunch (~500g)",price:110,oldPrice:135,img:"https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=400&q=80"},
+      {id:"g7",name:"Watermelon",meta:"Whole (~2kg)",price:85,oldPrice:105,img:"https://images.unsplash.com/photo-1568909344668-6f14a07b56a0?w=400&q=80"},
+      {id:"g8",name:"Kiwi Fruits",meta:"Pack of 4",price:150,oldPrice:180,img:"https://images.unsplash.com/photo-1618897996318-5a901fa0ca71?w=400&q=80"},
+    ],
+    "Vegetables": [
+      {id:"v1",name:"Baby Potatoes",meta:"500g",price:40,oldPrice:55,img:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400&q=80"},
+      {id:"v2",name:"Fresh Carrots",meta:"500g",price:35,oldPrice:45,img:"https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=400&q=80"},
+      {id:"v3",name:"Ripe Tomatoes",meta:"500g",price:30,oldPrice:40,img:"https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=400&q=80"},
+      {id:"v4",name:"Broccoli Crown",meta:"~400g",price:75,oldPrice:90,img:"https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=400&q=80"},
+      {id:"v5",name:"Spinach Bunch",meta:"200g",price:28,oldPrice:35,img:"https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=400&q=80"},
+      {id:"v6",name:"Capsicum Mix",meta:"3 colours (~400g)",price:65,oldPrice:80,img:"https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=400&q=80"},
+      {id:"v7",name:"Sweet Corn",meta:"2 cobs",price:45,oldPrice:55,img:"https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=400&q=80"},
+      {id:"v8",name:"Garlic Bulbs",meta:"Pack of 3",price:32,oldPrice:40,img:"https://images.unsplash.com/photo-1501200291289-c5a76c232e5f?w=400&q=80"},
+    ],
+    "Biscuits": [
+      {id:"b1",name:"Bourbon Cream",meta:"200g pack",price:35,oldPrice:40,img:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400&q=80"},
+      {id:"b2",name:"Digestive Biscuits",meta:"400g",price:60,oldPrice:72,img:"https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&q=80"},
+      {id:"b3",name:"Choco Chip Cookies",meta:"150g pack",price:75,oldPrice:90,img:"https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400&q=80"},
+      {id:"b4",name:"Butter Crackers",meta:"250g",price:48,oldPrice:58,img:"https://images.unsplash.com/photo-1534442372911-5a93e5a45ddd?w=400&q=80"},
+      {id:"b5",name:"Oat Cookies",meta:"150g, Wholegrain",price:85,oldPrice:99,img:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400&q=80"},
+      {id:"b6",name:"Cream Wafers",meta:"175g pack",price:42,oldPrice:52,img:"https://images.unsplash.com/photo-1471943311424-646960669fbc?w=400&q=80"},
+    ],
+    "Drinks": [
+      {id:"d1",name:"Mango Juice",meta:"1L Tetra Pack",price:65,oldPrice:78,img:"https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=400&q=80"},
+      {id:"d2",name:"Sparkling Water",meta:"500ml x 6",price:120,oldPrice:145,img:"https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=400&q=80"},
+      {id:"d3",name:"Fresh Orange Juice",meta:"1L, Cold Pressed",price:145,oldPrice:175,img:"https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400&q=80"},
+      {id:"d4",name:"Green Tea Bottle",meta:"500ml",price:55,oldPrice:65,img:"https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&q=80"},
+      {id:"d5",name:"Coconut Water",meta:"330ml Can",price:45,oldPrice:55,img:"https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400&q=80"},
+      {id:"d6",name:"Mixed Berry Shake",meta:"200ml",price:89,oldPrice:110,img:"https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=400&q=80"},
+    ],
+    "Tea & Coffee": [
+      {id:"tc1",name:"Darjeeling Tea",meta:"100g loose leaf",price:180,oldPrice:220,img:"https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&q=80"},
+      {id:"tc2",name:"Ground Coffee",meta:"250g, Medium Roast",price:320,oldPrice:380,img:"https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=400&q=80"},
+      {id:"tc3",name:"Green Tea Bags",meta:"25 bags",price:145,oldPrice:170,img:"https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=400&q=80"},
+      {id:"tc4",name:"Masala Chai Mix",meta:"200g",price:95,oldPrice:115,img:"https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=400&q=80"},
+      {id:"tc5",name:"Instant Coffee",meta:"100g jar",price:210,oldPrice:250,img:"https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&q=80"},
+      {id:"tc6",name:"Herbal Tea",meta:"20 bags, Assorted",price:130,oldPrice:155,img:"https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&q=80"},
+    ],
+    "Dairy": [
+      {id:"da1",name:"Full Cream Milk",meta:"1L Packet",price:58,oldPrice:65,img:"https://images.unsplash.com/photo-1563636619-e9143da7973b?w=400&q=80"},
+      {id:"da2",name:"Fresh Paneer",meta:"200g",price:85,oldPrice:100,img:"https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=400&q=80"},
+      {id:"da3",name:"Curd / Yogurt",meta:"500g cup",price:48,oldPrice:58,img:"https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&q=80"},
+      {id:"da4",name:"Salted Butter",meta:"100g",price:55,oldPrice:65,img:"https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=400&q=80"},
+      {id:"da5",name:"Mozzarella Cheese",meta:"200g block",price:185,oldPrice:225,img:"https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=400&q=80"},
+      {id:"da6",name:"Whipped Cream",meta:"250ml can",price:110,oldPrice:135,img:"https://images.unsplash.com/photo-1563636619-e9143da7973b?w=400&q=80"},
+    ],
+  },
+  accessories: {
+    "Watches": [
+      {id:"w1",name:"Classic Minimalist Watch",meta:"Stainless Steel, Black",price:2499,oldPrice:3499,img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80"},
+      {id:"w2",name:"Silver Chronograph",meta:"Rose Gold Case",price:4999,oldPrice:6500,img:"https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&q=80"},
+      {id:"w3",name:"Slim Leather Strap",meta:"Brown Leather, Tan",price:1899,oldPrice:2400,img:"https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400&q=80"},
+      {id:"w4",name:"Sports Digital Watch",meta:"Silicone Band, Black",price:1299,oldPrice:1699,img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80"},
+      {id:"w5",name:"Gold Dress Watch",meta:"Gold Plated, White Dial",price:5999,oldPrice:8000,img:"https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=400&q=80"},
+      {id:"w6",name:"Smart Band",meta:"Fitness Tracker, Black",price:2199,oldPrice:2799,img:"https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=400&q=80"},
+    ],
+    "Necklace": [
+      {id:"n1",name:"Gold Pendant Necklace",meta:"18K Gold Plated",price:1299,oldPrice:1599,img:"https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&q=80"},
+      {id:"n2",name:"Silver Chain",meta:"Sterling Silver, 18in",price:899,oldPrice:1100,img:"https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&q=80"},
+      {id:"n3",name:"Pearl Strand",meta:"Freshwater Pearls",price:2199,oldPrice:2800,img:"https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&q=80"},
+      {id:"n4",name:"Layered Boho Set",meta:"Gold Tone, 3 layers",price:749,oldPrice:999,img:"https://images.unsplash.com/photo-1601821765780-754fa98637c1?w=400&q=80"},
+    ],
+    "Earrings": [
+      {id:"e1",name:"Gold Hoop Earrings",meta:"14K Gold, 30mm",price:1599,oldPrice:1999,img:"https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&q=80"},
+      {id:"e2",name:"Pearl Drop Earrings",meta:"Freshwater Pearl",price:899,oldPrice:1150,img:"https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&q=80"},
+      {id:"e3",name:"Crystal Studs",meta:"Swarovski Crystals",price:699,oldPrice:899,img:"https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=400&q=80"},
+      {id:"e4",name:"Geometric Drops",meta:"Silver Plated",price:549,oldPrice:699,img:"https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&q=80"},
+    ],
+    "Bracelet": [
+      {id:"br1",name:"Gold Bangle Set",meta:"Set of 3, Gold Tone",price:899,oldPrice:1199,img:"https://images.unsplash.com/photo-1611085583191-a3b181a88401?w=400&q=80"},
+      {id:"br2",name:"Leather Wrap Bracelet",meta:"Brown Genuine Leather",price:649,oldPrice:849,img:"https://images.unsplash.com/photo-1573408301185-9519f94e10ac?w=400&q=80"},
+      {id:"br3",name:"Beaded Charm Bracelet",meta:"Multicolor, Adjustable",price:449,oldPrice:599,img:"https://images.unsplash.com/photo-1611085583191-a3b181a88401?w=400&q=80"},
+      {id:"br4",name:"Silver Tennis Bracelet",meta:"Sterling Silver",price:1899,oldPrice:2400,img:"https://images.unsplash.com/photo-1601821765780-754fa98637c1?w=400&q=80"},
+    ],
+    "Wallet": [
+      {id:"wa1",name:"Bifold Leather Wallet",meta:"Genuine Leather, Black",price:1299,oldPrice:1699,img:"https://images.unsplash.com/photo-1627123424574-724758594e93?w=400&q=80"},
+      {id:"wa2",name:"Slim Card Holder",meta:"Minimalist, Brown",price:799,oldPrice:999,img:"https://images.unsplash.com/photo-1627123424574-724758594e93?w=400&q=80"},
+      {id:"wa3",name:"RFID Blocking Wallet",meta:"Carbon Fiber, Black",price:1599,oldPrice:2000,img:"https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&q=80"},
+      {id:"wa4",name:"Travel Passport Wallet",meta:"PU Leather, Navy",price:999,oldPrice:1299,img:"https://images.unsplash.com/photo-1627123424574-724758594e93?w=400&q=80"},
+    ],
+    "Sunglasses": [
+      {id:"sg1",name:"Classic Aviators",meta:"Gold Frame, Brown Lens",price:1499,oldPrice:1999,img:"https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&q=80"},
+      {id:"sg2",name:"Wayfarer Style",meta:"Black Frame, UV400",price:999,oldPrice:1299,img:"https://images.unsplash.com/photo-1508296695146-257a814070b4?w=400&q=80"},
+      {id:"sg3",name:"Round Retro",meta:"Tortoise Frame",price:1199,oldPrice:1599,img:"https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&q=80"},
+      {id:"sg4",name:"Sport Wraparound",meta:"Polarised, Black",price:1799,oldPrice:2299,img:"https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=400&q=80"},
+    ],
+  },
+  beauty: {
+    "Cosmetics": [
+      {id:"c1",name:"Velvet Matte Lipstick",meta:"Cherry Red",price:549,oldPrice:699,img:"https://images.unsplash.com/photo-1586495777744-4e6a9e37de4c?w=400&q=80"},
+      {id:"c2",name:"Full Coverage Foundation",meta:"SPF 30, 30ml",price:899,oldPrice:1150,img:"https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&q=80"},
+      {id:"c3",name:"Mascara Volumizing",meta:"Waterproof, Black",price:649,oldPrice:799,img:"https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=400&q=80"},
+      {id:"c4",name:"Nude Eyeshadow Palette",meta:"12 shades",price:1199,oldPrice:1500,img:"https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=400&q=80"},
+      {id:"c5",name:"Blush Powder",meta:"Peach Glow, 8g",price:499,oldPrice:649,img:"https://images.unsplash.com/photo-1586495777744-4e6a9e37de4c?w=400&q=80"},
+      {id:"c6",name:"Lip Gloss",meta:"Clear, Plumping",price:349,oldPrice:450,img:"https://images.unsplash.com/photo-1583241800698-e8ab01830a63?w=400&q=80"},
+    ],
+    "Skin Care": [
+      {id:"sk1",name:"Hyaluronic Acid Serum",meta:"30ml, Hydrating",price:899,oldPrice:1199,img:"https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&q=80"},
+      {id:"sk2",name:"SPF 50 Sunscreen",meta:"50ml, Daily Use",price:599,oldPrice:799,img:"https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=400&q=80"},
+      {id:"sk3",name:"Vitamin C Cream",meta:"50ml, Brightening",price:749,oldPrice:999,img:"https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&q=80"},
+      {id:"sk4",name:"Retinol Night Cream",meta:"30ml, Anti-aging",price:1299,oldPrice:1600,img:"https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=400&q=80"},
+      {id:"sk5",name:"Micellar Water",meta:"200ml, Gentle Cleanser",price:449,oldPrice:599,img:"https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&q=80"},
+      {id:"sk6",name:"Face Mask Sheet",meta:"Pack of 5, Hydrating",price:299,oldPrice:399,img:"https://images.unsplash.com/photo-1520333789090-1afc82db536a?w=400&q=80"},
+    ],
+    "Hair Care": [
+      {id:"h1",name:"Argan Oil Shampoo",meta:"300ml, For All Hair",price:449,oldPrice:599,img:"https://images.unsplash.com/photo-1526045612212-70caf35c14df?w=400&q=80"},
+      {id:"h2",name:"Deep Conditioning Mask",meta:"200ml, Weekly Treatment",price:699,oldPrice:899,img:"https://images.unsplash.com/photo-1526045612212-70caf35c14df?w=400&q=80"},
+      {id:"h3",name:"Hair Growth Serum",meta:"50ml, Biotin Formula",price:899,oldPrice:1199,img:"https://images.unsplash.com/photo-1526045612212-70caf35c14df?w=400&q=80"},
+      {id:"h4",name:"Dry Shampoo Spray",meta:"200ml, Volume Boost",price:549,oldPrice:699,img:"https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=80"},
+      {id:"h5",name:"Heat Protectant Spray",meta:"200ml",price:399,oldPrice:499,img:"https://images.unsplash.com/photo-1526045612212-70caf35c14df?w=400&q=80"},
+    ],
+    "Bath & Body": [
+      {id:"bb1",name:"Luxury Body Scrub",meta:"200g, Coffee Blend",price:649,oldPrice:849,img:"https://images.unsplash.com/photo-1526947425960-945c6e72858f?w=400&q=80"},
+      {id:"bb2",name:"Moisturizing Body Lotion",meta:"400ml, Shea Butter",price:499,oldPrice:649,img:"https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=400&q=80"},
+      {id:"bb3",name:"Rose Bath Salts",meta:"500g",price:399,oldPrice:499,img:"https://images.unsplash.com/photo-1560421683-6856ea585c78?w=400&q=80"},
+      {id:"bb4",name:"Charcoal Soap Bar",meta:"100g, Detoxifying",price:249,oldPrice:325,img:"https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=400&q=80"},
+      {id:"bb5",name:"Shower Gel Set",meta:"3x100ml, Gift Set",price:799,oldPrice:1050,img:"https://images.unsplash.com/photo-1556760544-74068565f05c?w=400&q=80"},
+    ],
+    "Fragrances": [
+      {id:"f1",name:"Floral Eau de Parfum",meta:"50ml, Jasmine Rose",price:1899,oldPrice:2499,img:"https://images.unsplash.com/photo-1541643600914-78b084683702?w=400&q=80"},
+      {id:"f2",name:"Woody Cologne",meta:"100ml, Sandalwood",price:2299,oldPrice:2999,img:"https://images.unsplash.com/photo-1541643600914-78b084683702?w=400&q=80"},
+      {id:"f3",name:"Fresh Citrus EDT",meta:"75ml, Summer Edition",price:1499,oldPrice:1999,img:"https://images.unsplash.com/photo-1541643600914-78b084683702?w=400&q=80"},
+      {id:"f4",name:"Oud Perfume Oil",meta:"10ml, Intense",price:999,oldPrice:1299,img:"https://images.unsplash.com/photo-1541643600914-78b084683702?w=400&q=80"},
+    ],
+  }
+};
+
+const TRANSACTIONS = [
+  {id:"t1",desc:"Added to Wallet",amount:500,type:"credit",date:"Today, 10:30 AM"},
+  {id:"t2",desc:"Groceries Order",amount:-349,type:"debit",date:"Yesterday, 2:15 PM"},
+  {id:"t3",desc:"Accessories Purchase",amount:-2499,type:"debit",date:"14 Jun, 11:00 AM"},
+  {id:"t4",desc:"Refund - Order #4821",amount:180,type:"credit",date:"12 Jun, 9:45 AM"},
+  {id:"t5",desc:"Added to Wallet",amount:1000,type:"credit",date:"10 Jun, 6:00 PM"},
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let cart = JSON.parse(localStorage.getItem('rc_cart') || '[]');
+let walletBalance = parseFloat(localStorage.getItem('rc_wallet') || '0');
+let settings = JSON.parse(localStorage.getItem('rc_settings') || '{"dark":false,"lang":"en","currency":"INR","notif":true,"email":false}');
+let currentPage = 'login';
+let prevPage = 'home';
+let activeCategory = {groceries:'Fruits', accessories:'Watches', beauty:'Cosmetics'};
+let heroTimer = null;
+let currentSlide = 0;
+let resendInterval = null;
+let selectedAmount = 0;
+let userEmail = '';
+
+// ============================================================
+// INIT
+// ============================================================
+function init() {
+  applySettings();
+  updateCartBadge();
+  renderHome();
+  updateWalletDisplay();
+  renderTransactions();
+  renderSettings();
+  loadSettingsUI();
+}
+
+function applySettings() {
+  document.documentElement.setAttribute('data-theme', settings.dark ? 'dark' : 'light');
+  const dt = document.getElementById('darkToggle');
+  if (dt) { dt.classList.toggle('on', settings.dark); }
+}
+
+// ============================================================
+// PAGE NAVIGATION
+// ============================================================
+function showPage(page) {
+  // hide all pages
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  // show/hide nav
+  const isAuth = page !== 'login';
+  document.getElementById('topnav').classList.toggle('hidden', !isAuth);
+  document.getElementById('bottomnav').classList.toggle('hidden', !isAuth);
+  // show target page
+  document.getElementById('page-'+page).classList.add('active');
+  if (page !== 'login') prevPage = currentPage;
+  currentPage = page;
+  // update bottom nav
+  document.querySelectorAll('.bottom-nav-item').forEach(b => b.classList.remove('active'));
+  const activeBtn = document.getElementById('bn-'+page);
+  if (activeBtn) activeBtn.classList.add('active');
+  // page-specific init
+  if (page === 'home') { startHeroSlider(); }
+  else { stopHeroSlider(); }
+  if (page === 'groceries') renderCategoryPage('groceries');
+  if (page === 'accessories') renderCategoryPage('accessories');
+  if (page === 'beauty') renderCategoryPage('beauty');
+  if (page === 'cart') renderCart();
+  if (page === 'pay') { updateWalletDisplay(); renderTransactions(); }
+  if (page === 'offers') renderOffers();
+  if (page === 'settings') renderSettings();
+  window.scrollTo(0,0);
+}
+
+// ============================================================
+// AUTH
+// ============================================================
+function showLoginStep(step) {
+  ['login','otp','forgot'].forEach(s => {
+    document.getElementById('step-'+s).classList.toggle('hidden', s !== step);
+  });
+  if (step === 'otp') startResendTimer();
+}
+
+function handleSignIn() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value.trim();
+  if (!email) { showToast('Please enter your email or phone'); return; }
+  if (!pass) { showToast('Please enter your password'); return; }
+  userEmail = email;
+  updateUserProfile();
+  showLoginStep('otp');
+}
+
+function handleSignUp() {
+  const email = document.getElementById('loginEmail').value.trim();
+  if (!email) { showToast('Please enter your email or phone to create an account'); return; }
+  userEmail = email;
+  updateUserProfile();
+  showLoginStep('otp');
+}
+
+function updateUserProfile() {
+  const avatar = userEmail.charAt(0).toUpperCase();
+  const el = document.getElementById('userAvatar');
+  const ne = document.getElementById('userName');
+  const ee = document.getElementById('userEmail');
+  if (el) el.textContent = avatar;
+  if (ne) ne.textContent = userEmail.includes('@') ? userEmail.split('@')[0] : userEmail;
+  if (ee) ee.textContent = userEmail;
+}
+
+function verifyOtp() {
+  const inputs = document.querySelectorAll('.otp-input');
+  const otp = Array.from(inputs).map(i => i.value).join('');
+  if (otp.length < 6) { showToast('Please enter all 6 digits'); return; }
+  showToast('Welcome to Real Choice!');
+  setTimeout(() => showPage('home'), 600);
+}
+
+function otpMove(input, idx) {
+  if (input.value.length === 1 && idx < 6) {
+    document.querySelectorAll('.otp-input')[idx].focus();
+  }
+  if (input.value.length === 0 && idx > 1) {
+    document.querySelectorAll('.otp-input')[idx-2].focus();
+  }
+}
+
+function startResendTimer() {
+  let t = 30;
+  document.getElementById('resendBtn').disabled = true;
+  document.getElementById('resendTimer').textContent = t;
+  clearInterval(resendInterval);
+  resendInterval = setInterval(() => {
+    t--;
+    document.getElementById('resendTimer').textContent = t;
+    if (t <= 0) {
+      clearInterval(resendInterval);
+      document.getElementById('resendBtn').disabled = false;
+    }
+  }, 1000);
+}
+
+function resendOtp() { showToast('OTP resent!'); startResendTimer(); }
+
+function handleForgot() {
+  const email = document.getElementById('resetEmail').value.trim();
+  if (!email) { showToast('Please enter your email'); return; }
+  showToast('Reset link sent to ' + email + '!');
+  setTimeout(() => showLoginStep('login'), 1500);
+}
+
+function handleLogout() {
+  showPage('login');
+  showLoginStep('login');
+  document.getElementById('loginEmail').value = '';
+  document.getElementById('loginPass').value = '';
+}
+
+// ============================================================
+// HERO SLIDER
+// ============================================================
+function startHeroSlider() {
+  stopHeroSlider();
+  heroTimer = setInterval(() => goSlide((currentSlide + 1) % 3), 3500);
+}
+function stopHeroSlider() { if (heroTimer) clearInterval(heroTimer); }
+function goSlide(n) {
+  document.getElementById('slide-'+currentSlide).classList.remove('active');
+  document.getElementById('dot-'+currentSlide).classList.remove('active');
+  currentSlide = n;
+  document.getElementById('slide-'+currentSlide).classList.add('active');
+  document.getElementById('dot-'+currentSlide).classList.add('active');
+}
+
+// ============================================================
+// RENDER HOME
+// ============================================================
+function renderHome() {
+  // Fresh picks — fruits
+  const fp = document.getElementById('freshPicksScroll');
+  const fruits = PRODUCTS.groceries['Fruits'];
+  fp.innerHTML = fruits.slice(0,6).map(p => productCardSmall(p, 'groceries')).join('');
+  // Trending
+  const tg = document.getElementById('trendingGrid');
+  const trending = [
+    PRODUCTS.accessories['Watches'][0],
+    PRODUCTS.beauty['Skin Care'][0],
+    PRODUCTS.accessories['Wallet'][0],
+    PRODUCTS.groceries['Fruits'][4],
+    PRODUCTS.beauty['Fragrances'][0],
+    PRODUCTS.accessories['Sunglasses'][0],
+    PRODUCTS.groceries['Tea & Coffee'][1],
+    PRODUCTS.beauty['Cosmetics'][0],
+  ];
+  tg.innerHTML = trending.map(p => productCardHTML(p)).join('');
+}
+
+// ============================================================
+// CATEGORY PAGES
+// ============================================================
+function renderCategoryPage(type) {
+  const data = PRODUCTS[type];
+  const cats = Object.keys(data);
+  // Tabs
+  const tabsEl = document.getElementById(type==='groceries'?'groceryTabs':type==='accessories'?'accessoryTabs':'beautyTabs');
+  tabsEl.innerHTML = cats.map(c =>
+    `<button class="tab-btn ${activeCategory[type]===c?'active':''}" onclick="setTab('${type}','${c}')" data-testid="tab-${type}-${c.toLowerCase().replace(/\s/g,'-')}">${c}</button>`
+  ).join('');
+  renderProductGrid(type);
+}
+
+function setTab(type, cat) {
+  activeCategory[type] = cat;
+  renderCategoryPage(type);
+  const searchId = type==='groceries'?'grocerySearch':type==='accessories'?'accessorySearch':'beautySearch';
+  document.getElementById(searchId).value = '';
+}
+
+function renderProductGrid(type, searchVal) {
+  const gridEl = document.getElementById(type==='groceries'?'groceryGrid':type==='accessories'?'accessoryGrid':'beautyGrid');
+  let products = PRODUCTS[type][activeCategory[type]] || [];
+  if (searchVal) {
+    const q = searchVal.toLowerCase();
+    products = products.filter(p => p.name.toLowerCase().includes(q) || p.meta.toLowerCase().includes(q));
+  }
+  if (products.length === 0) {
+    gridEl.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:3rem;color:hsl(var(--muted-fg))">No products found</div>`;
+    return;
+  }
+  gridEl.innerHTML = products.map(p => productCardHTML(p)).join('');
+}
+
+function filterProducts(type, val) { renderProductGrid(type, val); }
+
+// ============================================================
+// PRODUCT CARD HTML
+// ============================================================
+function productCardHTML(p) {
+  const inCart = cart.find(c => c.id === p.id);
+  const qty = inCart ? inCart.qty : 0;
+  const sym = getCurrencySymbol();
+  const price = convertPrice(p.price);
+  const old = p.oldPrice ? convertPrice(p.oldPrice) : null;
+  return `
+    <div class="product-card card-hover" data-testid="card-product-${p.id}">
+      <img class="product-card-img" src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&q=80'"/>
+      <div class="product-card-body">
+        <div class="product-name">${p.name}</div>
+        <div class="product-meta">${p.meta}</div>
+        <div style="display:flex;align-items:center;gap:.25rem">
+          <span class="product-price">${sym}${price}</span>
+          ${old ? `<span class="product-price-old">${sym}${old}</span>` : ''}
+          ${p.oldPrice ? `<span class="badge badge-discount" style="margin-left:auto">${Math.round((1-p.price/p.oldPrice)*100)}% off</span>` : ''}
+        </div>
+        <div class="product-actions">
+          ${qty > 0
+            ? `<div class="qty-control">
+                <button class="qty-btn" onclick="updateQty('${p.id}',-1)" data-testid="btn-dec-${p.id}">-</button>
+                <span class="qty-val" id="qty-${p.id}">${qty}</span>
+                <button class="qty-btn" onclick="updateQty('${p.id}',1)" data-testid="btn-inc-${p.id}">+</button>
+               </div>`
+            : `<button class="add-cart-btn" onclick="addToCart('${p.id}')" id="atc-${p.id}" data-testid="btn-add-${p.id}">Add</button>`
+          }
+        </div>
+      </div>
+    </div>`;
+}
+
+function productCardSmall(p) {
+  const sym = getCurrencySymbol();
+  return `
+    <div class="product-card card-hover" style="width:160px" data-testid="card-fp-${p.id}">
+      <img class="product-card-img" src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&q=80'"/>
+      <div class="product-card-body">
+        <div class="product-name line-clamp-1">${p.name}</div>
+        <div class="product-meta">${p.meta}</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:.4rem">
+          <span class="product-price">${sym}${convertPrice(p.price)}</span>
+          <button class="add-cart-btn" onclick="addToCart('${p.id}')" data-testid="btn-add-fp-${p.id}">Add</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+// ============================================================
+// CART
+// ============================================================
+function findProduct(id) {
+  for (const section of Object.values(PRODUCTS)) {
+    for (const items of Object.values(section)) {
+      const found = items.find(p => p.id === id);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
+function addToCart(id) {
+  const product = findProduct(id);
+  if (!product) return;
+  const existing = cart.find(c => c.id === id);
+  if (existing) { existing.qty++; }
+  else { cart.push({...product, qty:1}); }
+  saveCart();
+  showToast(product.name + ' added to cart');
+  refreshProductCards();
+}
+
+function updateQty(id, delta) {
+  const item = cart.find(c => c.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) cart = cart.filter(c => c.id !== id);
+  saveCart();
+  refreshProductCards();
+  if (currentPage === 'cart') renderCart();
+}
+
+function saveCart() {
+  localStorage.setItem('rc_cart', JSON.stringify(cart));
+  updateCartBadge();
+}
+
+function updateCartBadge() {
+  const total = cart.reduce((s,i) => s+i.qty, 0);
+  const badge = document.getElementById('cartBadge');
+  if (badge) badge.textContent = total;
+  const countEl = document.getElementById('cartItemCount');
+  if (countEl) countEl.textContent = total + ' item' + (total !== 1 ? 's' : '');
+}
+
+function refreshProductCards() {
+  // refresh any rendered product grids
+  if (currentPage === 'groceries') renderProductGrid('groceries');
+  if (currentPage === 'accessories') renderProductGrid('accessories');
+  if (currentPage === 'beauty') renderProductGrid('beauty');
+  if (currentPage === 'home') renderHome();
+}
+
+function renderCart() {
+  updateCartBadge();
+  const itemsEl = document.getElementById('cartItems');
+  const summaryEl = document.getElementById('cartSummary');
+  if (cart.length === 0) {
+    itemsEl.innerHTML = `
+      <div class="empty-cart">
+        <div class="empty-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--primary))" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        </div>
+        <div style="font-size:1.1rem;font-weight:700;margin-bottom:.5rem">Your cart is empty</div>
+        <div style="color:hsl(var(--muted-fg));font-size:.875rem;margin-bottom:1.5rem">Add some products to get started</div>
+        <button class="btn btn-primary" onclick="showPage('home')" data-testid="btn-continue-shopping">Continue Shopping</button>
+      </div>`;
+    summaryEl.innerHTML = '';
+    return;
+  }
+  const sym = getCurrencySymbol();
+  itemsEl.innerHTML = cart.map(item => {
+    const price = convertPrice(item.price);
+    return `
+      <div class="cart-item" data-testid="cart-item-${item.id}">
+        <img class="cart-item-img" src="${item.img}" alt="${item.name}" onerror="this.src='https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&q=80'"/>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-price">${item.meta}</div>
+          <div style="color:hsl(var(--primary));font-weight:700;font-size:.875rem">${sym}${price} each</div>
+          <div class="cart-item-footer">
+            <div class="qty-control">
+              <button class="qty-btn" onclick="updateQty('${item.id}',-1)" data-testid="btn-cart-dec-${item.id}">-</button>
+              <span class="qty-val">${item.qty}</span>
+              <button class="qty-btn" onclick="updateQty('${item.id}',1)" data-testid="btn-cart-inc-${item.id}">+</button>
+            </div>
+            <div style="font-weight:700">${sym}${convertPrice(item.price * item.qty)}</div>
+            <button onclick="updateQty('${item.id}',-999)" style="background:none;border:none;color:hsl(var(--danger));cursor:pointer;padding:.25rem" data-testid="btn-remove-${item.id}">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+  const subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  const tax = Math.round(subtotal * 0.05);
+  const delivery = subtotal >= 499 ? 0 : 49;
+  const total = subtotal + tax + delivery;
+  summaryEl.innerHTML = `
+    <div class="cart-summary mt-4">
+      <div style="font-size:1rem;font-weight:700;margin-bottom:.5rem">Order Summary</div>
+      <div class="summary-row"><span>Subtotal</span><span class="val">${sym}${convertPrice(subtotal)}</span></div>
+      <div class="summary-row"><span>Tax (5%)</span><span class="val">${sym}${convertPrice(tax)}</span></div>
+      <div class="summary-row"><span>Delivery</span><span class="val" style="color:${delivery===0?'hsl(var(--success))':'inherit'}">${delivery===0?'FREE':sym+convertPrice(delivery)}</span></div>
+      ${delivery > 0 ? `<div style="font-size:.75rem;color:hsl(var(--muted-fg));margin:.25rem 0">Add ${sym}${convertPrice(499-subtotal)} more for free delivery</div>` : ''}
+      <div class="summary-row total"><span>Total</span><span class="val">${sym}${convertPrice(total)}</span></div>
+      <button class="btn btn-primary btn-full btn-lg" style="margin-top:1rem" onclick="placeOrder()" data-testid="btn-place-order">Place Order</button>
+      <button class="btn btn-ghost btn-full mt-2" onclick="showPage('home')" data-testid="btn-continue-from-cart">Continue Shopping</button>
+    </div>`;
+}
+
+function placeOrder() {
+  const sym = getCurrencySymbol();
+  const subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  const tax = Math.round(subtotal * 0.05);
+  const delivery = subtotal >= 499 ? 0 : 49;
+  const total = subtotal + tax + delivery;
+  // Show success overlay
+  const overlay = document.createElement('div');
+  overlay.className = 'success-overlay';
+  overlay.innerHTML = `
+    <div class="success-card">
+      <div class="success-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div style="font-size:1.25rem;font-weight:800;margin-bottom:.5rem">Order Placed!</div>
+      <div style="color:hsl(var(--muted-fg));font-size:.9rem;margin-bottom:.25rem">Your order of <strong>${sym}${convertPrice(total)}</strong> has been confirmed.</div>
+      <div style="color:hsl(var(--muted-fg));font-size:.8rem;margin-bottom:1.5rem">Estimated delivery: 30-45 minutes</div>
+      <button class="btn btn-primary btn-full" onclick="this.closest('.success-overlay').remove(); cart=[]; saveCart(); showPage('home')">Back to Home</button>
+    </div>`;
+  document.body.appendChild(overlay);
+}
+
+// ============================================================
+// OFFERS
+// ============================================================
+function renderOffers() {
+  const el = document.getElementById('offersContent');
+  const sym = getCurrencySymbol();
+  const offers = [
+    {title:'Fresh Produce Sale',desc:'Up to 40% off on fruits & vegetables',bg:'linear-gradient(135deg,hsl(150 60% 28%),hsl(150 50% 20%))',page:'groceries'},
+    {title:'Flash Watch Sale',desc:'Premium watches from ₹999',bg:'linear-gradient(135deg,hsl(40 80% 45%),hsl(30 75% 35%))',page:'accessories'},
+    {title:'Beauty Bundle',desc:'Buy 2 get 1 free on skin care',bg:'linear-gradient(135deg,hsl(300 50% 40%),hsl(280 45% 30%))',page:'beauty'},
+    {title:'Weekend Special',desc:'Free delivery on orders above ₹299',bg:'linear-gradient(135deg,hsl(210 70% 40%),hsl(220 60% 30%))',page:'home'},
+  ];
+  el.innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:1rem">
+      ${offers.map((o,i) => `
+        <div onclick="showPage('${o.page}')" style="background:${o.bg};border-radius:1.25rem;padding:1.5rem;color:#fff;cursor:pointer;transition:transform .2s" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform=''">
+          <div style="font-size:.75rem;opacity:.75;margin-bottom:.25rem;text-transform:uppercase;letter-spacing:.05em">Limited Time</div>
+          <div style="font-size:1.35rem;font-weight:800;margin-bottom:.25rem">${o.title}</div>
+          <div style="opacity:.85;font-size:.9rem">${o.desc}</div>
+          <div style="margin-top:.875rem;font-size:.825rem;font-weight:600;opacity:.9">Shop Now &rarr;</div>
+        </div>`).join('')}
+      <div style="margin-top:.5rem">
+        <div style="font-size:1.1rem;font-weight:700;margin-bottom:1rem">Deals on Groceries</div>
+        <div class="product-grid">
+          ${PRODUCTS.groceries['Fruits'].slice(0,4).map(p => productCardHTML(p)).join('')}
+        </div>
+      </div>
+    </div>`;
+}
+
+// ============================================================
+// SETTINGS
+// ============================================================
+function renderSettings() {
+  loadSettingsUI();
+  updateUserProfile();
+}
+
+function loadSettingsUI() {
+  const dt = document.getElementById('darkToggle');
+  if (dt) dt.classList.toggle('on', settings.dark);
+  const nt = document.getElementById('notifToggle');
+  if (nt) nt.classList.toggle('on', settings.notif);
+  const et = document.getElementById('emailToggle');
+  if (et) et.classList.toggle('on', settings.email);
+  const lang = document.getElementById('langSelect');
+  if (lang) lang.value = settings.lang || 'en';
+  const cur = document.getElementById('currencySelect');
+  if (cur) cur.value = settings.currency || 'INR';
+}
+
+function toggleDark() {
+  settings.dark = !settings.dark;
+  applySettings();
+  saveSettings(true);
+}
+function toggleNotif() { settings.notif = !settings.notif; loadSettingsUI(); }
+function toggleEmail() { settings.email = !settings.email; loadSettingsUI(); }
+
+function saveSettings(silent) {
+  settings.lang = document.getElementById('langSelect').value;
+  settings.currency = document.getElementById('currencySelect').value;
+  localStorage.setItem('rc_settings', JSON.stringify(settings));
+  if (!silent) showToast('Settings saved!');
+}
+
+// ============================================================
+// PAY PAGE
+// ============================================================
+function updateWalletDisplay() {
+  const el = document.getElementById('walletBalance');
+  const sym = getCurrencySymbol();
+  if (el) el.innerHTML = sym + walletBalance.toFixed(2);
+}
+
+function selectAmount(n) {
+  selectedAmount = n;
+  document.querySelectorAll('.amount-chip').forEach(c => c.classList.remove('selected'));
+  event.target.classList.add('selected');
+  document.getElementById('customAmount').value = '';
+}
+
+function addToWallet() {
+  const custom = parseFloat(document.getElementById('customAmount').value);
+  const amount = custom > 0 ? custom : selectedAmount;
+  if (!amount || amount <= 0) { showToast('Please select or enter an amount'); return; }
+  walletBalance += amount;
+  localStorage.setItem('rc_wallet', walletBalance.toString());
+  updateWalletDisplay();
+  TRANSACTIONS.unshift({id:'t'+Date.now(),desc:'Added to Wallet',amount,type:'credit',date:'Just now'});
+  renderTransactions();
+  document.getElementById('customAmount').value = '';
+  document.querySelectorAll('.amount-chip').forEach(c => c.classList.remove('selected'));
+  selectedAmount = 0;
+  showToast('&#8377;' + amount + ' added to wallet!');
+}
+
+function saveCard() {
+  const n = document.getElementById('cardNumber').value.replace(/\s/g,'');
+  const e = document.getElementById('cardExpiry').value;
+  const c = document.getElementById('cardCvv').value;
+  const nm = document.getElementById('cardName').value;
+  if (n.length < 16) { showToast('Enter a valid 16-digit card number'); return; }
+  if (e.length < 5) { showToast('Enter a valid expiry date'); return; }
+  if (c.length < 3) { showToast('Enter a valid CVV'); return; }
+  if (!nm) { showToast('Enter cardholder name'); return; }
+  showToast('Card saved securely!');
+  document.getElementById('cardNumber').value = '';
+  document.getElementById('cardExpiry').value = '';
+  document.getElementById('cardCvv').value = '';
+  document.getElementById('cardName').value = '';
+}
+
+function formatCard(input) {
+  let v = input.value.replace(/\D/g,'').substring(0,16);
+  input.value = v.replace(/(.{4})/g,'$1 ').trim();
+}
+
+function formatExpiry(input) {
+  let v = input.value.replace(/\D/g,'').substring(0,4);
+  if (v.length >= 2) v = v.substring(0,2) + '/' + v.substring(2);
+  input.value = v;
+}
+
+function linkUpi(app) {
+  showToast(app + ' linked successfully!');
+}
+
+function linkUpiManual() {
+  const id = document.getElementById('upiId').value.trim();
+  if (!id) { showToast('Please enter your UPI ID'); return; }
+  if (!id.includes('@')) { showToast('Please enter a valid UPI ID (e.g. name@upi)'); return; }
+  showToast(id + ' linked!');
+  document.getElementById('upiId').value = '';
+}
+
+function scrollToAddMoney() {
+  document.getElementById('addMoneySection').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function renderTransactions() {
+  const el = document.getElementById('transactionList');
+  if (!el) return;
+  const sym = getCurrencySymbol();
+  el.innerHTML = TRANSACTIONS.slice(0,6).map(t => `
+    <div class="txn-item" data-testid="txn-${t.id}">
+      <div class="txn-icon" style="background:${t.type==='credit'?'hsl(142 60% 90%)':'hsl(0 60% 92%)'}">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${t.type==='credit'?'hsl(142 60% 30%)':'hsl(0 60% 40%)'}" stroke-width="2.5">
+          ${t.type==='credit'
+            ? '<line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/>'
+            : '<line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/>'}
+        </svg>
+      </div>
+      <div class="txn-info">
+        <div style="font-size:.875rem;font-weight:600">${t.desc}</div>
+        <div style="font-size:.75rem;color:hsl(var(--muted-fg))">${t.date}</div>
+      </div>
+      <div class="txn-amount ${t.type}">${t.type==='credit'?'+':'-'}${sym}${Math.abs(t.amount)}</div>
+    </div>`).join('');
+}
+
+// ============================================================
+// CURRENCY
+// ============================================================
+function getCurrencySymbol() {
+  const c = settings.currency || 'INR';
+  return c === 'USD' ? '$' : c === 'EUR' ? '€' : '₹';
+}
+
+function convertPrice(inr) {
+  const c = settings.currency || 'INR';
+  if (c === 'USD') return (inr / 83).toFixed(2);
+  if (c === 'EUR') return (inr / 91).toFixed(2);
+  return inr;
+}
+
+// ============================================================
+// GLOBAL SEARCH
+// ============================================================
+function handleGlobalSearch(q) {
+  if (!q) return;
+  // Find the first matching product across all categories
+  for (const [type, cats] of Object.entries(PRODUCTS)) {
+    for (const [cat, items] of Object.entries(cats)) {
+      if (items.some(p => p.name.toLowerCase().includes(q.toLowerCase()))) {
+        activeCategory[type] = cat;
+        showPage(type);
+        const searchId = type==='groceries'?'grocerySearch':type==='accessories'?'accessorySearch':'beautySearch';
+        document.getElementById(searchId).value = q;
+        filterProducts(type, q);
+        document.getElementById('globalSearch').value = q;
+        return;
+      }
+    }
+  }
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+let toastTimer = null;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>${msg}`;
+  t.classList.add('show');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ============================================================
+// BOOT
+// ============================================================
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
